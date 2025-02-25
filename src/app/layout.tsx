@@ -12,6 +12,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 
 import { Toaster } from "~/components/ui/sonner";
 import { TopNav } from "~/components/topnav";
+import { api } from "~/trpc/server";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,9 +20,10 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await api.authorization.currentSession();
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <NextSSRPlugin
@@ -35,7 +37,7 @@ export default function RootLayout({
       />
       <body>
         <TRPCReactProvider>
-          <TopNav />
+          <TopNav initialSession={session} />
           {children}
         </TRPCReactProvider>
         <Toaster richColors />
