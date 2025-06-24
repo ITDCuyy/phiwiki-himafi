@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { api } from "~/trpc/server";
-
+import { Rating } from "./rating";
 import { DeleteMyImageButton } from "./delete-my-image-button";
 import {
   Card,
@@ -28,6 +28,7 @@ export async function Gallery() {
               className="h-48 w-full rounded-md object-cover"
             />
           </CardContent>
+          <Rating imageId={image.id} />
           <CardFooter>
             <DeleteMyImageButton imageId={image.id} />
           </CardFooter>

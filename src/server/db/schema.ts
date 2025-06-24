@@ -28,6 +28,7 @@ export const images = createTable("image", {
   name: varchar("name", { length: 256 }).notNull(),
   url: varchar("url", { length: 1024 }).notNull(),
   key: varchar("key", { length: 1024 }).notNull(),
+  rating: integer("rating").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

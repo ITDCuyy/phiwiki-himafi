@@ -34,4 +34,26 @@ export const imageRouter = createTRPCRouter({
 
       await utapi.deleteFiles(`${imageKey[0]!.key}`);
     }),
+  getImageRating: publicProcedure
+    .input(z.object({ imageId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const rating = await ctx.db
+        .select({ rating: images.rating })
+        .from(images)
+        .where(eq(images.id, input.imageId));
+      return rating[0]?.rating;
+    }),
+  rateImage: protectedProcedure
+    .input(z.object({ imageId: z.number(), rating: z.number().min(0).max(5) }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(images)
+        .set({ rating: input.rating })
+        .where(
+          and(
+            eq(images.id, input.imageId),
+            eq(images.userId, ctx.session.user.id),
+          ),
+        );
+    }),
 });
