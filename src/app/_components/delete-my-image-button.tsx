@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
+import { Trash } from "lucide-react";
 
 export function DeleteMyImageButton({ imageId }: { imageId: number }) {
   const router = useRouter();
@@ -29,7 +30,7 @@ export function DeleteMyImageButton({ imageId }: { imageId: number }) {
           await DeleteMyImage();
         }}
       >
-        Delete
+        <Trash /> Delete
       </Button>
     </div>
   );
