@@ -8,5 +8,5 @@ export default {
   dbCredentials: {
     url: env.DATABASE_URL,
   },
-  tablesFilter: ["my-stack-25q1_*"],
+  tablesFilter: ["cnb-himafi_*"],
 } satisfies Config;
