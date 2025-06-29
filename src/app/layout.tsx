@@ -13,6 +13,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "~/components/ui/sonner";
 import { TopNav } from "~/components/topnav";
 import { api } from "~/trpc/server";
+import { ThemeProvider } from "~/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -25,7 +26,11 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await api.authorization.currentSession();
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html
+      lang="en"
+      className={`${GeistSans.variable}`}
+      suppressHydrationWarning
+    >
       <NextSSRPlugin
         /**
          * The `extractRouterConfig` will extract **only** the route configs
@@ -36,11 +41,18 @@ export default async function RootLayout({
         routerConfig={extractRouterConfig(ourFileRouter)}
       />
       <body>
-        <TRPCReactProvider>
-          <TopNav initialSession={session} />
-          {children}
-        </TRPCReactProvider>
-        <Toaster richColors />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TRPCReactProvider>
+            <TopNav initialSession={session} />
+            {children}
+          </TRPCReactProvider>
+          <Toaster richColors />
+        </ThemeProvider>
       </body>
     </html>
   );
