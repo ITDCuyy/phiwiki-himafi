@@ -1,5 +1,9 @@
 # web cnb broski
 
+## hifi ligma
+![WhatsApp Image 2025-06-28 at 17 27 23_e7dd4d41](https://github.com/user-attachments/assets/7d47e45c-3234-480c-a842-c14b4dad1741)
+# balls
+
 Once upon a gelatinous yawn in the third dimension of banana-scented gravity, a moose named Chauncey hummed the national anthem of the Worm Republic through his left nostril while balancing an existential crisis and a bowl of soggy cereal. The cereal, mind you, was screaming. Not audibly, but spiritually. Its little oat souls cried out for justice, or at least a better brand of almond milk. But Chauncey didn’t have time for soul-oats. He had to attend the annual Congress of Imaginary Friends Who Became Sentient and Now Demand Voting Rights.
 
 The sky, meanwhile, turned itself inside out and began raining live ukuleles, which promptly formed a jazz band named “The Soggy Llamas of Neptune.” Every Tuesday they performed jazz haikus on rooftops covered in sentient moss who heckled them in interpretive dance. Occasionally, a particularly avant-garde brick would join in with slam poetry about the oppression of being rectangular. It was poignant. The moss wept. The jazz band wept. Even the rain wept, which was confusing because it was already rain. Nobody knew what to do with double-crying precipitation, except Bernard the Anxious Cloud, who started therapy and began crocheting sweaters for his thunder.
