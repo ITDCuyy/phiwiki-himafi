@@ -1,3 +1,6 @@
+"use client";
+
+import type React from "react";
 import {
   Accordion,
   AccordionContent,
@@ -23,219 +26,392 @@ import {
   Zap,
   Instagram,
   Twitter,
+  X,
 } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 
 export default function Component() {
   const faqCategories = [
     {
-      title: "General Questions",
+      title: "HIMAFI ITB",
       icon: HelpCircle,
-      color: "from-blue-500 to-cyan-500",
-      bgColor: "bg-blue-50",
+      color: "from-blue-400 to-cyan-400",
+      bgColor: "bg-blue-900/20",
       faqs: [
         {
-          question: "What is your service about?",
-          answer:
-            "Our service provides comprehensive solutions for businesses looking to streamline their operations and improve efficiency. We offer a range of tools and features designed to help you manage your workflow, collaborate with team members, and achieve your business goals.",
+          question: "Apa itu HIMAFI ITB?",
+          answer: "keluargahuu",
         },
         {
-          question: "How do I get started?",
+          question: "Siapa saja yang dapat menjadi anggota HIMAFI ITB?",
           answer:
-            "Getting started is easy! Simply sign up for an account, choose your plan, and follow our onboarding process. We'll guide you through setting up your workspace and connecting your team members.",
+            "siapa saja jiwa malang yang berada di jurusan fisigma UI (universitas itb)",
         },
         {
-          question: "Is there a free trial available?",
-          answer:
-            "Yes, we offer a 14-day free trial for all new users. No credit card required. You can explore all features and see how our platform works for your business before making a commitment.",
+          question: "Apa saja kegiatan rutin HIMAFI ITB?",
+          answer: "mewing pekanan",
         },
       ],
     },
     {
-      title: "Account & Billing",
+      title: "Keanggotaan & Partisipasi",
       icon: CreditCard,
-      color: "from-emerald-500 to-teal-500",
-      bgColor: "bg-emerald-50",
+      color: "from-emerald-400 to-teal-400",
+      bgColor: "bg-emerald-900/20",
       faqs: [
         {
-          question: "How do I update my billing information?",
-          answer:
-            "You can update your billing information by going to your account settings and clicking on the 'Billing' tab. From there, you can update your payment method, billing address, and view your invoice history.",
+          question: "Bagaimana cara bergabung dengan kepengurusan HIMAFI IT?",
+          answer: "intellektuele schule dulu lur",
         },
         {
-          question: "Can I cancel my subscription anytime?",
-          answer:
-            "Yes, you can cancel your subscription at any time. Your account will remain active until the end of your current billing period, and you won't be charged for the next cycle.",
+          question: "Apa keuntungan menjadi bagian dari HIMAFI ITB?",
+          answer: "bisa bertemu tokoh tokoh chad fisika itb",
         },
         {
-          question: "Do you offer refunds?",
-          answer:
-            "We offer a 30-day money-back guarantee for annual plans. For monthly plans, we provide prorated refunds on a case-by-case basis. Please contact our support team to discuss your specific situation.",
+          question: "Bagaimana cara mengetahui agenda HIMAFI ITB terbaru?",
+          answer: "tepukin mahasiswa jakob terdekat atau pantau medsos himafi",
         },
       ],
     },
     {
-      title: "Technical Support",
+      title: "Kegiatan Akademik & Non-Akademik",
       icon: Settings,
-      color: "from-purple-500 to-pink-500",
-      bgColor: "bg-purple-50",
+      color: "from-purple-400 to-pink-400",
+      bgColor: "bg-purple-900/20",
       faqs: [
         {
-          question: "What browsers do you support?",
-          answer:
-            "We support all modern browsers including Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your preferred browser for the best experience.",
+          question:
+            "Apakah HIMAFI ITB menyelenggarakan kegiatan akademik seperti tutoring atau diskusi ilmiah?",
+          answer: "tubay on the rescue",
         },
         {
-          question: "Is my data secure?",
-          answer:
-            "Absolutely. We use enterprise-grade security measures including SSL encryption, regular security audits, and compliance with industry standards like SOC 2 and GDPR. Your data is stored in secure, redundant data centers.",
+          question: "Apa saja acara yang diadakan HIMAFI ITB?",
+          answer: "ayo ikut eureka",
         },
         {
-          question: "Do you have an API?",
-          answer:
-            "Yes, we provide a comprehensive REST API that allows you to integrate our service with your existing tools and workflows. Full documentation is available in our developer portal.",
+          question:
+            "Apakah HIMAFI ITB bekerja sama dengan himpunan atau institusi lain?",
+          answer: "p koleb",
         },
         {
-          question: "What if I need help setting up?",
-          answer:
-            "We offer multiple support channels including live chat, email support, and comprehensive documentation. For enterprise customers, we also provide dedicated onboarding assistance and training sessions.",
+          question:
+            "Bagaimana saya bisa ikut serta dalam lomba atau seminar yang diadakan HIMAFI ITB?",
+          answer: "p daftar",
         },
       ],
     },
     {
-      title: "Features & Functionality",
+      title: "Administratif & Layanan",
       icon: Zap,
-      color: "from-orange-500 to-red-500",
-      bgColor: "bg-orange-50",
+      color: "from-orange-400 to-red-400",
+      bgColor: "bg-orange-900/20",
       faqs: [
         {
-          question: "Can I integrate with other tools?",
-          answer:
-            "Yes, we offer integrations with popular tools like Slack, Google Workspace, Microsoft 365, Salesforce, and many others. You can find the full list of integrations in your account settings.",
+          question:
+            "Bagaimana cara meminjam barang atau ruangan melalui HIMAFI?",
+          answer: "ijin dulu yg penting",
         },
         {
-          question: "Is there a mobile app?",
-          answer:
-            "Yes, we have mobile apps available for both iOS and Android. You can download them from the App Store or Google Play Store. The mobile apps sync seamlessly with your web account.",
+          question:
+            "Apakah HIMAFI menyediakan dokumen atau arsip kegiatan terdahulu?",
+          answer: "idk maybe",
         },
         {
-          question: "How many team members can I add?",
-          answer:
-            "The number of team members depends on your plan. Our Starter plan includes up to 5 members, Professional plan includes up to 25 members, and Enterprise plan offers unlimited members.",
+          question:
+            "Apakah HIMAFI menyediakan bantuan akademik atau advokasi mahasiswa?",
+          answer: "uhh yea iirc",
         },
       ],
     },
   ];
 
+  // Extract all questions for dynamic placeholder
+  const allQuestions = faqCategories.flatMap((category) =>
+    category.faqs.map((faq) => faq.question),
+  );
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [inputValue, setInputValue] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (allQuestions.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentQuestionIndex(
+        (prevIndex) => (prevIndex + 1) % allQuestions.length,
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [allQuestions.length]);
+
+  // Search functionality
+  const filteredCategories = useMemo(() => {
+    if (!inputValue.trim()) return faqCategories;
+
+    const searchTerm = inputValue.toLowerCase().trim();
+
+    return faqCategories
+      .map((category) => ({
+        ...category,
+        faqs: category.faqs.filter(
+          (faq) =>
+            faq.question.toLowerCase().includes(searchTerm) ||
+            faq.answer.toLowerCase().includes(searchTerm),
+        ),
+      }))
+      .filter((category) => category.faqs.length > 0);
+  }, [inputValue]);
+
+  // Highlight matching text
+  const highlightText = (text: string, searchTerm: string) => {
+    if (!searchTerm.trim()) return text;
+
+    const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escapedTerm})`, "gi");
+
+    // Use dangerouslySetInnerHTML to avoid React splitting issues
+    const highlightedText = text.replace(
+      regex,
+      '<mark class="bg-yellow-400/30 text-yellow-200 rounded">$1</mark>',
+    );
+
+    return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const clearSearch = () => {
+    setInputValue("");
+  };
+
+  const isSearching = inputValue.trim().length > 0;
+  const hasResults = filteredCategories.length > 0;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
       {/* Header */}
       <div className="relative overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 opacity-10"></div>
-        <div className="absolute left-1/4 top-0 h-72 w-72 animate-pulse rounded-full bg-purple-300 opacity-20 mix-blend-multiply blur-xl filter"></div>
-        <div className="absolute right-1/4 top-0 h-72 w-72 animate-pulse rounded-full bg-cyan-300 opacity-20 mix-blend-multiply blur-xl filter delay-1000"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20"></div>
+        <div className="absolute left-1/4 top-0 h-72 w-72 animate-pulse rounded-full bg-purple-500/20 opacity-30 mix-blend-multiply blur-xl filter"></div>
+        <div className="absolute right-1/4 top-0 h-72 w-72 animate-pulse rounded-full bg-cyan-500/20 opacity-30 mix-blend-multiply blur-xl filter delay-1000"></div>
 
         <div className="container relative mx-auto px-4 py-16">
           <div className="space-y-6 text-center">
             <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600">
               <HelpCircle className="h-8 w-8 text-white" />
             </div>
-            <h1 className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-5xl font-bold tracking-tight text-transparent">
+            <h1 className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-5xl font-bold tracking-tight text-transparent">
               Frequently Asked Questions
             </h1>
-            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-gray-600">
-              Find answers to common questions about our service, features, and
-              policies. We're here to help you succeed.
+            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-gray-300">
+              Masih bingung soal HIMAFI? Tenang, kami bantu jawab di sini!
             </p>
           </div>
 
           {/* Search Bar */}
-          <div className="mx-auto mt-10 max-w-md">
+          <div className="mx-auto mt-10 max-w-2xl">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-              <Input
-                placeholder="Search FAQs..."
-                className="h-12 border-gray-200 bg-white/80 pl-12 shadow-lg backdrop-blur-sm transition-all duration-300 focus:border-blue-500 focus:shadow-xl"
-              />
+              <Search className="absolute left-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+              <div className="relative">
+                <Input
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={
+                    isFocused || inputValue ? "Ajukan pertanyaan..." : ""
+                  }
+                  className="h-12 border-gray-700 bg-gray-800/80 pl-12 pr-12 text-white shadow-lg backdrop-blur-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:shadow-xl"
+                />
+                {inputValue && (
+                  <button
+                    onClick={clearSearch}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 transform text-gray-400 transition-colors hover:text-gray-300"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+                {!isFocused && !inputValue && allQuestions.length > 0 && (
+                  <div className="pointer-events-none absolute left-12 right-4 top-1/2 h-6 -translate-y-1/2 transform overflow-hidden">
+                    <div
+                      className="transition-transform duration-500 ease-in-out"
+                      style={{
+                        transform: `translateY(-${currentQuestionIndex * 24}px)`,
+                      }}
+                    >
+                      {allQuestions.map((question, index) => (
+                        <div
+                          key={index}
+                          className="flex h-6 items-center overflow-hidden text-sm text-gray-500"
+                          style={{
+                            width: "calc(100% - 24px)",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {`Cari: "${question}"`}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+
+          {/* Search Results Summary */}
+          {isSearching && (
+            <div className="mx-auto mt-4 max-w-2xl text-center">
+              <p className="text-sm text-gray-400">
+                {hasResults ? (
+                  <>
+                    Ditemukan{" "}
+                    {filteredCategories.reduce(
+                      (total, category) => total + category.faqs.length,
+                      0,
+                    )}{" "}
+                    hasil untuk{" "}
+                    <span className="font-semibold text-white">
+                      &quot;{inputValue}&quot;
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Tidak ada hasil untuk{" "}
+                    <span className="font-semibold text-white">
+                      &quot;{inputValue}&quot;
+                    </span>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
       {/* FAQ Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="mx-auto max-w-5xl space-y-8">
-          {faqCategories.map((category, categoryIndex) => {
-            const IconComponent = category.icon;
-            return (
-              <Card
-                key={categoryIndex}
-                className="overflow-hidden border-0 bg-white/80 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl"
-              >
-                <CardHeader className={`${category.bgColor} relative`}>
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className={`inline-flex h-12 w-12 items-center justify-center bg-gradient-to-r ${category.color} rounded-xl shadow-lg`}
-                    >
-                      <IconComponent className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-2xl font-bold text-gray-900">
-                        {category.title}
-                      </CardTitle>
-                      <CardDescription className="mt-1 text-gray-600">
-                        Common questions about {category.title.toLowerCase()}
-                      </CardDescription>
-                    </div>
-                  </div>
-                  {/* Decorative gradient */}
-                  <div
-                    className={`absolute right-0 top-0 h-32 w-32 bg-gradient-to-br ${category.color} -translate-y-8 translate-x-8 rounded-full opacity-10`}
-                  ></div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="w-full space-y-2"
+          {!hasResults && isSearching ? (
+            <Card className="overflow-hidden border-0 border-gray-700 bg-gray-800/80 shadow-xl backdrop-blur-sm">
+              <CardContent className="p-12 text-center">
+                <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-700">
+                  <Search className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-white">
+                  Tidak ada hasil
+                </h3>
+                <p className="mb-4 text-gray-400">
+                  Kami tidak dapat menemukan FAQ yang cocok dengan pencarian
+                  Anda. Coba kata kunci yang berbeda atau jelajahi semua
+                  kategori di bawah.
+                </p>
+                <Button
+                  onClick={clearSearch}
+                  variant="outline"
+                  className="border-gray-600 bg-transparent text-gray-300 hover:bg-gray-700"
+                >
+                  Hapus pencarian
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            filteredCategories.map((category, categoryIndex) => {
+              const IconComponent = category.icon;
+              return (
+                <Card
+                  key={categoryIndex}
+                  className="overflow-hidden border-0 border-gray-700 bg-gray-800/80 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl"
+                >
+                  <CardHeader
+                    className={`${category.bgColor} relative border-b border-gray-700`}
                   >
-                    {category.faqs.map((faq, faqIndex) => (
-                      <AccordionItem
-                        key={faqIndex}
-                        value={`item-${categoryIndex}-${faqIndex}`}
-                        className="rounded-lg border border-gray-100 px-4 transition-colors duration-200 hover:border-gray-200"
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className={`inline-flex h-12 w-12 items-center justify-center bg-gradient-to-r ${category.color} rounded-xl shadow-lg`}
                       >
-                        <AccordionTrigger className="py-4 text-left font-semibold text-gray-900 hover:text-gray-700">
-                          {faq.question}
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-4 leading-relaxed text-gray-600">
-                          {faq.answer}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
-            );
-          })}
+                        <IconComponent className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-2xl font-bold text-white">
+                          {category.title}
+                        </CardTitle>
+                        <CardDescription className="mt-1 text-gray-400">
+                          {isSearching ? (
+                            <>{category.faqs.length} pertanyaan yang cocok</>
+                          ) : (
+                            <>
+                              Pertanyaan umum tentang{" "}
+                              {category.title.toLowerCase()}
+                            </>
+                          )}
+                        </CardDescription>
+                      </div>
+                    </div>
+                    {/* Decorative gradient */}
+                    <div
+                      className={`absolute right-0 top-0 h-32 w-32 bg-gradient-to-br ${category.color} -translate-y-8 translate-x-8 rounded-full opacity-10`}
+                    ></div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="w-full space-y-2"
+                    >
+                      {category.faqs.map((faq, faqIndex) => (
+                        <AccordionItem
+                          key={faqIndex}
+                          value={`item-${categoryIndex}-${faqIndex}`}
+                          className="rounded-lg border border-gray-700 px-4 transition-colors duration-200 hover:border-gray-600"
+                        >
+                          <AccordionTrigger className="py-4 text-left font-semibold text-white hover:text-gray-200">
+                            {isSearching
+                              ? highlightText(faq.question, inputValue)
+                              : faq.question}
+                          </AccordionTrigger>
+                          <AccordionContent className="pb-4 leading-relaxed text-gray-300">
+                            {isSearching
+                              ? highlightText(faq.answer, inputValue)
+                              : faq.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
 
         {/* Contact Section */}
         <div className="mx-auto mt-20 max-w-4xl">
-          <Card className="overflow-hidden border-0 bg-gradient-to-r from-blue-50 via-white to-purple-50 shadow-2xl">
+          <Card className="overflow-hidden border-0 border-gray-700 bg-gradient-to-r from-gray-800/80 via-gray-800/90 to-gray-800/80 shadow-2xl">
             <CardHeader className="relative pb-6 text-center">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-cyan-500/5"></div>
               <div className="relative">
                 <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600">
                   <MessageCircle className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-3xl font-bold text-transparent">
-                  Still have questions?
+                <CardTitle className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-3xl font-bold text-transparent">
+                  Masih ada pertanyaan?
                 </CardTitle>
-                <CardDescription className="mt-2 text-lg text-gray-600">
-                  {
-                    "Can't find what you're looking for? We're here to help you succeed."
-                  }
+                <CardDescription className="mt-2 text-lg text-gray-400">
+                  Tidak menemukan yang Anda cari? Kami siap membantu Anda!
                 </CardDescription>
               </div>
             </CardHeader>
@@ -243,19 +419,24 @@ export default function Component() {
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <Button className="flex h-12 items-center gap-3 bg-gradient-to-r from-pink-500 to-rose-500 px-8 shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-rose-600 hover:shadow-xl">
                   <Instagram className="h-5 w-5" />
-                  Follow on Instagram
+                  Follow Instagram
                 </Button>
                 <Button className="flex h-12 items-center gap-3 bg-gradient-to-r from-sky-500 to-blue-500 px-8 shadow-lg transition-all duration-300 hover:from-sky-600 hover:to-blue-600 hover:shadow-xl">
                   <Twitter className="h-5 w-5" />
-                  Follow on Twitter
+                  Follow Twitter
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex h-12 items-center gap-3 border-2 border-gray-200 bg-white px-8 shadow-lg transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-xl"
+                  className="flex h-12 items-center gap-3 border-2 border-gray-600 bg-gray-800 px-8 text-gray-200 shadow-lg transition-all duration-300 hover:border-gray-500 hover:bg-gray-700 hover:shadow-xl"
                 >
                   <Mail className="h-5 w-5" />
                   Email Support
                 </Button>
+              </div>
+              <div className="mt-6 rounded-lg border border-gray-600 bg-gray-700/60 p-4 text-center">
+                <p className="text-sm font-medium text-gray-300">
+                  📱 Hubungi kami melalui media sosial atau email
+                </p>
               </div>
             </CardContent>
           </Card>
