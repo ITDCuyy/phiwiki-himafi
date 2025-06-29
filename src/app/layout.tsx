@@ -40,7 +40,7 @@ export default async function RootLayout({
          */
         routerConfig={extractRouterConfig(ourFileRouter)}
       />
-      <body>
+      <body className="bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

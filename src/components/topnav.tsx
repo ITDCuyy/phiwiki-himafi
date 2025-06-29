@@ -8,6 +8,8 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Menu } from "lucide-react";
 
 export function TopNav({
   initialSession,
@@ -28,31 +30,31 @@ export function TopNav({
   };
 
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center justify-center self-center bg-background/70 px-20 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-20 items-center justify-center">
-        <div className="mr-auto flex items-center">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <div className="flex-initial">
-              <div className="flex h-16 w-16 items-center justify-center">
-                <img
-                  src="/himafi.jpeg"
-                  alt="Logo MK"
-                  width={128}
-                  height={128}
-                />
-              </div>
+    <header className="sticky top-0 z-50 flex w-full items-center justify-center self-center bg-background/70 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-8 md:px-20">
+      <div className="container flex h-20 items-center justify-between">
+        {/* Left: Logo */}
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="flex h-16 w-16 items-center justify-center">
+              <img src="/himafi.jpeg" alt="himafi" width={128} height={128} />
             </div>
+            <span className="font-bold max-lg:hidden">HIMAFI ITB</span>
           </Link>
-          <nav className="items-center space-x-6 text-sm font-medium md:flex">
-            <Link href="/about">About</Link>
-            <Link href="/programs">Programs</Link>
-            <Link href="/news">News</Link>
-            <Link href="/blog">Blog</Link>
-            <Link href="/faq">FAQ</Link>
-          </nav>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
+
+        {/* Center: Navigation Links (Desktop) */}
+        <nav className="items-center space-x-6 text-sm font-medium max-lg:hidden">
+          <Link href="/about">About</Link>
+          <Link href="/programs">Programs</Link>
+          <Link href="/news">News</Link>
+          <Link href="/blog">Blog</Link>
+          <Link href="/faq">FAQ</Link>
+        </nav>
+
+        {/* Right: Search, User, and Mobile Menu */}
+        <div className="flex items-center gap-4">
+          {/* Search */}
+          <div className="max-lg:hidden">
             <form onSubmit={handleSearch}>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -65,6 +67,8 @@ export function TopNav({
               </div>
             </form>
           </div>
+
+          {/* User Info */}
           <div className="flex items-center gap-4">
             {session.data ? (
               <div className="flex items-center gap-4">
@@ -85,6 +89,45 @@ export function TopNav({
                 <Button>Sign In</Button>
               </Link>
             )}
+          </div>
+
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <nav className="grid gap-6 text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2 text-lg font-semibold"
+                  >
+                    <span className="font-bold">HIMAFI ITB</span>
+                  </Link>
+                  <Link href="/about">About</Link>
+                  <Link href="/programs">Programs</Link>
+                  <Link href="/news">News</Link>
+                  <Link href="/blog">Blog</Link>
+                  <Link href="/faq">FAQ</Link>
+                  <div className="mt-4">
+                    <form onSubmit={handleSearch}>
+                      <div className="relative">
+                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Search"
+                          className="pl-8"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
