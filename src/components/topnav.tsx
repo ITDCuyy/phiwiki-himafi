@@ -54,19 +54,6 @@ export function TopNav({
         {/* Right: Search, User, and Mobile Menu */}
         <div className="flex items-center gap-4">
           {/* Search */}
-          <div className="max-lg:hidden">
-            <form onSubmit={handleSearch}>
-              <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search"
-                  className="pl-8 md:w-[150px] lg:w-[250px]"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-            </form>
-          </div>
 
           {/* User Info */}
           <div className="flex items-center gap-4">
@@ -112,19 +99,6 @@ export function TopNav({
                   <Link href="/news">News</Link>
                   <Link href="/blog">Blog</Link>
                   <Link href="/faq">FAQ</Link>
-                  <div className="mt-4">
-                    <form onSubmit={handleSearch}>
-                      <div className="relative">
-                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          placeholder="Search"
-                          className="pl-8"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                      </div>
-                    </form>
-                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
