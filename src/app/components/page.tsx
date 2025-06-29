@@ -1,21 +1,11 @@
 "use client";
 
-import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import React from "react";
-import { Combobox } from "~/components/ui/combobox";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { Badge } from "~/components/ui/badge";
@@ -27,12 +17,33 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "~/components/ui/breadcrumb";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "~/components/ui/carousel";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "~/components/ui/chart";
 import { Checkbox } from "~/components/ui/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
+import { Combobox } from "~/components/ui/combobox";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -73,6 +84,15 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "~/components/ui/navigation-menu";
+import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
@@ -85,7 +105,19 @@ import { Progress } from "~/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/components/ui/sidebar";
 import { Skeleton } from "~/components/ui/skeleton";
+import { Toaster } from "~/components/ui/sonner";
 import { Switch } from "~/components/ui/switch";
 import {
   Table,
@@ -106,9 +138,37 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { toast } from "sonner";
-import { Toaster } from "~/components/ui/sonner";
+import { cn } from "~/lib/utils";
 import { Bold, ChevronsUpDown, Italic, Underline } from "lucide-react";
+import React from "react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { toast } from "sonner";
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className,
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
 
 const frameworks = [
   { value: "next.js", label: "Next.js" },
@@ -128,6 +188,26 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
+  const chartData = [
+    { month: "January", desktop: 186, mobile: 80 },
+    { month: "February", desktop: 305, mobile: 200 },
+    { month: "March", desktop: 237, mobile: 120 },
+    { month: "April", desktop: 73, mobile: 190 },
+    { month: "May", desktop: 209, mobile: 130 },
+    { month: "June", desktop: 214, mobile: 140 },
+  ];
+
+  const chartConfig = {
+    desktop: {
+      label: "Desktop",
+      color: "#2563eb",
+    },
+    mobile: {
+      label: "Mobile",
+      color: "#60a5fa",
+    },
+  };
+
   const showcases = [
     {
       title: "Alert",
@@ -144,6 +224,188 @@ export default function HomePage() {
             Your session has expired. Please log in again.
           </AlertDescription>
         </Alert>,
+      ],
+    },
+    {
+      title: "Navigation Menu",
+      components: [
+        <NavigationMenu key="nm1">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href="/"
+                      >
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          shadcn/ui
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Beautifully designed components built with Radix UI
+                          and Tailwind CSS.
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <ListItem href="/docs" title="Introduction">
+                    Re-usable components built using Radix UI and Tailwind CSS.
+                  </ListItem>
+                  <ListItem href="/docs/installation" title="Installation">
+                    How to install dependencies and structure your app.
+                  </ListItem>
+                  <ListItem
+                    href="/docs/primitives/typography"
+                    title="Typography"
+                  >
+                    Styles for headings, paragraphs, lists...etc
+                  </ListItem>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ListItem
+                    href="/docs/primitives/alert-dialog"
+                    title="Alert Dialog"
+                  >
+                    A modal dialog that interrupts the user with important
+                    content and expects a response.
+                  </ListItem>
+                  <ListItem
+                    href="/docs/primitives/hover-card"
+                    title="Hover Card"
+                  >
+                    For sighted users to preview content available behind a
+                    link.
+                  </ListItem>
+                  <ListItem href="/docs/primitives/progress" title="Progress">
+                    Displays an indicator showing the completion progress of a
+                    task, typically displayed as a progress bar.
+                  </ListItem>
+                  <ListItem
+                    href="/docs/primitives/scroll-area"
+                    title="Scroll-area"
+                  >
+                    Visually or semantically separates content.
+                  </ListItem>
+                  <ListItem href="/docs/primitives/tabs" title="Tabs">
+                    A set of layered sections of content—known as tab
+                    panels—that are displayed one at a time.
+                  </ListItem>
+                  <ListItem href="/docs/primitives/tooltip" title="Tooltip">
+                    A popup that displays information related to an element when
+                    the element receives keyboard focus or the mouse hovers over
+                    it.
+                  </ListItem>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Documentation
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>,
+      ],
+    },
+    {
+      title: "Sidebar",
+      components: [
+        <div
+          key="s1"
+          className="relative h-[500px] w-full overflow-hidden rounded-lg border bg-background"
+        >
+          <SidebarProvider>
+            <Sidebar>
+              <SidebarHeader>
+                <SidebarTrigger />
+              </SidebarHeader>
+              <SidebarContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Home</SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Users</SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Settings</SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarContent>
+              <SidebarFooter>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Logout</SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarFooter>
+            </Sidebar>
+            <main className="space-y-4 p-4">
+              <SidebarTrigger>
+                <Button>Toggle Sidebar</Button>
+              </SidebarTrigger>
+              <h1 className="text-xl font-semibold">Main Content</h1>
+              <p>This is the main content area next to the sidebar.</p>
+            </main>
+          </SidebarProvider>
+        </div>,
+      ],
+    },
+    {
+      title: "Carousel",
+      components: [
+        <Carousel className="w-full max-w-xs" key="ca1">
+          <CarouselContent>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CarouselItem key={index}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <span className="text-4xl font-semibold">
+                        {index + 1}
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>,
+      ],
+    },
+    {
+      title: "Chart",
+      components: [
+        <ChartContainer
+          key="ch1"
+          config={chartConfig}
+          className="min-h-[200px] w-full"
+        >
+          <BarChart accessibilityLayer data={chartData}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <YAxis />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+          </BarChart>
+        </ChartContainer>,
       ],
     },
     {
@@ -630,7 +892,7 @@ export default function HomePage() {
             <Button variant="outline">Learn More</Button>
           </CardFooter>
         </Card>,
-        <Card key="c2" variant="outline">
+        <Card key="c2">
           <CardHeader>
             <CardTitle>Plan Details</CardTitle>
           </CardHeader>
