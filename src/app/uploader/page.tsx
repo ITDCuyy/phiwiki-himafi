@@ -198,7 +198,7 @@ export default function HomePage() {
               <div className="rounded-lg bg-white p-4">
                 <QRCodeSVG
                   value={qrUrl}
-                  size={80}
+                  size={160}
                   //   level={"H"}
                 />
               </div>
