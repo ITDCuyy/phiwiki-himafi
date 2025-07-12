@@ -36,9 +36,15 @@ export function TopNav({
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-16 w-16 items-center justify-center">
-              <img src="/himafi.jpeg" alt="himafi" width={128} height={128} />
+              <img
+                className="rounded-full"
+                src="/phiwiki.jpg"
+                alt="phiwiki"
+                width={128}
+                height={128}
+              />
             </div>
-            <span className="font-bold max-lg:hidden">HIMAFI ITB</span>
+            <span className="font-bold max-lg:hidden">Phiwiki ITB</span>
           </Link>
         </div>
 

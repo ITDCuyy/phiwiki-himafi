@@ -16,9 +16,9 @@ import { api } from "~/trpc/server";
 import { ThemeProvider } from "~/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: "HIMAFI ITB",
-  description: "Himpunan Mahasiswa Fisika ITB",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: "Phiwiki ITB",
+  description: "Phiwiki ITB",
+  icons: [{ rel: "icon", url: "/phiwiki.jpg" }],
 };
 
 export default async function RootLayout({
@@ -43,7 +43,8 @@ export default async function RootLayout({
       <body className="bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          forcedTheme="light"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

@@ -112,7 +112,7 @@ export default function CreateLinkPage() {
               <Button
                 type="submit"
                 disabled={createLinkMutation.isPending}
-                className="w-full rounded bg-blue-500 p-2 text-white hover:bg-blue-600 disabled:bg-blue-300"
+                className="w-full rounded bg-primary p-2 text-white hover:bg-primary/90 disabled:bg-primary/50"
               >
                 {createLinkMutation.isPending ? "Processing..." : "Create Link"}
               </Button>
