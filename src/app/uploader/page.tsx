@@ -81,7 +81,7 @@ export default function HomePage() {
 
       xhr.onload = () => {
         if (xhr.status === 200) {
-          const playerUrl = `https://phiwiki.himafiitb/play?video=${encodeURIComponent(newFilename)}`;
+          const playerUrl = `https://phiwiki.himafiitb.com/play?video=${encodeURIComponent(newFilename)}`;
           setQrUrl(playerUrl);
         } else {
           throw new Error(`Upload failed with status: ${xhr.status}`);
@@ -136,6 +136,17 @@ export default function HomePage() {
             <p className="text-xs text-muted-foreground">Any video format</p>
           </div>
 
+          <CardDescription>
+            <span className="font-bold text-destructive">
+              Tolong sizenya di compress agar: <br />{" "}
+            </span>
+            <div className="pl-4 text-muted-foreground">
+              1. yg nonton di mobile tidak kehabisan kuota <br />
+              2. phiwiki gk perlu bayar banyak storage ke cloudflare <br />
+              3. yg wifi kosannya jelek bisa nonton
+            </div>
+          </CardDescription>
+
           {selectedFile && !isUploading && (
             <div className="animate-fade-in flex items-center justify-between rounded-lg bg-muted p-3">
               <div className="flex items-center gap-3 overflow-hidden">
@@ -182,7 +193,7 @@ export default function HomePage() {
           {qrUrl && (
             <div className="animate-fade-in mt-8 flex flex-col items-center rounded-xl bg-muted p-6 text-center">
               <h2 className="mb-4 text-lg font-semibold text-foreground">
-                Upload Complete! Scan Me.
+                Upload Complete
               </h2>
               <div className="rounded-lg bg-white p-4">
                 <QRCodeSVG
@@ -191,9 +202,12 @@ export default function HomePage() {
                   //   level={"H"}
                 />
               </div>
-              <p className="mt-4 break-all text-xs text-muted-foreground">
+              <a
+                href={qrUrl}
+                className="mt-4 break-all font-mono text-xs text-muted-foreground hover:underline"
+              >
                 {qrUrl}
-              </p>
+              </a>
             </div>
           )}
         </CardContent>

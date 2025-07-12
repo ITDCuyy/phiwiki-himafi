@@ -2,6 +2,13 @@
 
 import { useSearchParams } from "next/navigation";
 import { Clapperboard, AlertTriangle } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 
 export default function PlayPage() {
   const searchParams = useSearchParams();
@@ -32,12 +39,12 @@ export default function PlayPage() {
   const displayName = getDisplayName(videoFile);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-4">
-      <div className="w-full max-w-4xl">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-4xl">
         {videoSrc ? (
-          <>
+          <CardContent className="p-4 sm:p-6">
             <video
-              className="w-full rounded-lg shadow-2xl shadow-cyan-500/20"
+              className="w-full rounded-lg shadow-2xl shadow-primary/20"
               controls
               autoPlay
               playsInline
@@ -47,24 +54,24 @@ export default function PlayPage() {
               Your browser does not support the video tag.
             </video>
             <div className="mt-4 text-center">
-              <h1 className="flex items-center justify-center gap-2 text-2xl font-bold text-white">
-                <Clapperboard className="h-7 w-7 text-cyan-400" />
+              <h1 className="flex items-center justify-center gap-2 text-2xl font-bold text-foreground">
+                <Clapperboard className="h-7 w-7 text-primary" />
                 Now Playing
               </h1>
-              <p className="break-all text-gray-400">{displayName}</p>
+              <p className="break-all text-muted-foreground">{displayName}</p>
             </div>
-          </>
+          </CardContent>
         ) : (
-          <div className="rounded-lg bg-gray-800 p-8 text-center text-gray-400">
-            <AlertTriangle className="mx-auto mb-4 h-12 w-12 text-yellow-500" />
-            <h2 className="text-2xl font-bold text-white">Video Not Found</h2>
-            <p className="mt-2">
+          <CardHeader className="items-center text-center">
+            <AlertTriangle className="mb-4 h-12 w-12 text-destructive" />
+            <CardTitle>Video Not Found</CardTitle>
+            <CardDescription>
               The video link is invalid or missing. Please generate a new QR
               code.
-            </p>
-          </div>
+            </CardDescription>
+          </CardHeader>
         )}
-      </div>
+      </Card>
     </main>
   );
 }
