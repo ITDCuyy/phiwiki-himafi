@@ -3,8 +3,15 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { QRCodeSVG } from "qrcode.react";
-import { QrCode, Video, UploadCloud, FileVideo, X } from "lucide-react";
+import { QRCodeCanvas } from "qrcode.react";
+import {
+  QrCode,
+  Video,
+  UploadCloud,
+  FileVideo,
+  X,
+  Download,
+} from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -98,6 +105,36 @@ export default function HomePage() {
       console.error(err);
       setError(err.message || "An unknown error occurred.");
       setIsUploading(false);
+    }
+  };
+
+  const handleDownload = () => {
+    const canvas = document.getElementById(
+      "qr-code-canvas",
+    ) as HTMLCanvasElement;
+    if (canvas) {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream"); //
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+
+      // Create a more descriptive filename from the video name
+      let filename = "qr-code.png";
+      try {
+        const urlParams = new URLSearchParams(new URL(qrUrl).search);
+        const videoName = urlParams.get("video");
+        if (videoName) {
+          filename = `${videoName.split(".")[0]}-qr.png`;
+        }
+      } catch (e) {
+        console.error("Could not parse URL to create filename:", e);
+      }
+
+      downloadLink.download = filename;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
     }
   };
 
@@ -196,12 +233,20 @@ export default function HomePage() {
                 Upload Complete
               </h2>
               <div className="rounded-lg bg-white p-4">
-                <QRCodeSVG
+                <QRCodeCanvas
+                  id="qr-code-canvas"
                   value={qrUrl}
                   size={160}
                   //   level={"H"}
                 />
               </div>
+              <Button
+                onClick={handleDownload}
+                className="mt-4 w-full max-w-[200px]"
+              >
+                <Download className="mr-2 h-5 w-5" />
+                Download PNG
+              </Button>
               <a
                 href={qrUrl}
                 className="mt-4 break-all font-mono text-xs text-muted-foreground hover:underline"
