@@ -59,6 +59,17 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  // Protect uploader page
+  if (pathname.startsWith("/uploader")) {
+    if (!session) {
+      return redirectTo("/api/auth/signin");
+    }
+    const userRole = session.user?.role;
+    if (userRole !== "member" && userRole !== "admin") {
+      return redirectTo("/"); // Not a member or admin
+    }
+  }
+
   return NextResponse.next();
 }
 

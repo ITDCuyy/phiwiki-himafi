@@ -21,6 +21,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
+import { api } from "~/trpc/react";
 
 export default function HomePage() {
   // Add type annotations to state variables
@@ -32,6 +33,14 @@ export default function HomePage() {
 
   // Type the ref for the file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Get user permissions
+  const { data: permissions, isLoading: permissionsLoading } =
+    api.authorization.getPermissions.useQuery();
+  const generateUploadUrl = api.video.generateUploadUrl.useMutation();
+
+  // Check if user can upload
+  const canUpload = permissions?.isMember ?? false;
 
   // Type the event for the file input change handler
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,29 +59,21 @@ export default function HomePage() {
       return;
     }
 
+    if (!canUpload) {
+      setError("You need to be a member or higher to upload files.");
+      return;
+    }
+
     setIsUploading(true);
     setUploadProgress(0);
     setError("");
 
     try {
-      const apiResponse = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          filename: selectedFile.name,
-          contentType: selectedFile.type,
-        }),
+      // Use tRPC to generate the upload URL
+      const { signedUrl, newFilename } = await generateUploadUrl.mutateAsync({
+        filename: selectedFile.name,
+        contentType: selectedFile.type,
       });
-
-      if (!apiResponse.ok) {
-        throw new Error("Failed to get upload URL from server.");
-      }
-
-      // Type the expected API response
-      const {
-        signedUrl,
-        newFilename,
-      }: { signedUrl: string; newFilename: string } = await apiResponse.json();
 
       const xhr = new XMLHttpRequest();
       xhr.open("PUT", signedUrl, true);
@@ -101,9 +102,11 @@ export default function HomePage() {
       };
 
       xhr.send(selectedFile);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setError(err.message || "An unknown error occurred.");
+      const errorMessage =
+        err instanceof Error ? err.message : "An unknown error occurred.";
+      setError(errorMessage);
       setIsUploading(false);
     }
   };
@@ -214,12 +217,24 @@ export default function HomePage() {
 
           <Button
             onClick={handleUpload}
-            disabled={!selectedFile || isUploading}
+            disabled={
+              !selectedFile || isUploading || !canUpload || permissionsLoading
+            }
             className="w-full"
           >
             <QrCode className="mr-2 h-5 w-5" />
-            {isUploading ? "Uploading..." : "Upload & Generate QR"}
+            {isUploading
+              ? "Uploading..."
+              : !canUpload && !permissionsLoading
+                ? "Member Access Required"
+                : "Upload & Generate QR"}
           </Button>
+
+          {!canUpload && !permissionsLoading && (
+            <p className="text-center text-sm text-muted-foreground">
+              You need to be a member or higher to upload files.
+            </p>
+          )}
 
           {error && (
             <p className="animate-fade-in text-center text-sm text-destructive">

@@ -5,6 +5,7 @@ import { authorizationRouter } from "./routers/authorization";
 import { linkRouter } from "./routers/link";
 import { postRouter } from "./routers/post";
 import { userRouter } from "./routers/user";
+import { videoRouter } from "./routers/video";
 /**
  * This is the primary router for your server.
  *
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   link: linkRouter,
   post: postRouter,
   user: userRouter,
+  video: videoRouter,
 });
 
 // export type definition of API
