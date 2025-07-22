@@ -8,7 +8,7 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Menu } from "lucide-react";
 import { useSession } from "next-auth/react";
 
@@ -53,20 +53,17 @@ export function TopNav() {
           <Link href="/blog">Blog</Link>
           <Link href="/faq">FAQ</Link>
           {["admin", "member"].includes(role) && (
-            <Link href="/link" className="font-semibold text-muted-foreground">
+            <Link href="/link" className="font-semibold text-secondary">
               Link shortener
             </Link>
           )}
           {["admin", "member"].includes(role) && (
-            <Link
-              href="/uploader"
-              className="font-semibold text-muted-foreground"
-            >
+            <Link href="/uploader" className="font-semibold text-secondary">
               Upload video
             </Link>
           )}
           {["admin"].includes(role) && (
-            <Link href="/admin" className="font-semibold text-muted-foreground">
+            <Link href="/admin" className="font-semibold text-secondary">
               Admin
             </Link>
           )}
@@ -107,44 +104,42 @@ export function TopNav() {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
-                <nav className="grid gap-6 text-lg font-medium">
+
+              <SheetContent
+                side="left"
+                className="flex flex-col gap-6 overflow-scroll text-lg font-medium"
+              >
+                <SheetTitle>
                   <Link
                     href="/"
                     className="flex items-center gap-2 text-lg font-semibold"
                   >
                     <span className="font-bold">HIMAFI ITB</span>
                   </Link>
-                  <Link href="/about">About</Link>
-                  <Link href="/programs">Programs</Link>
-                  <Link href="/news">News</Link>
-                  <Link href="/blog">Blog</Link>
-                  <Link href="/faq">FAQ</Link>
-                  {["admin", "member"].includes(role) && (
-                    <Link
-                      href="/link"
-                      className="font-semibold text-muted-foreground"
-                    >
-                      Link shortener
-                    </Link>
-                  )}
-                  {["admin", "member"].includes(role) && (
-                    <Link
-                      href="/uploader"
-                      className="font-semibold text-muted-foreground"
-                    >
-                      Upload video
-                    </Link>
-                  )}
-                  {["admin"].includes(role) && (
-                    <Link
-                      href="/admin"
-                      className="font-semibold text-muted-foreground"
-                    >
-                      Admin
-                    </Link>
-                  )}
-                </nav>
+                </SheetTitle>
+                <Link href="/about">About</Link>
+                <Link href="/programs">Programs</Link>
+                <Link href="/news">News</Link>
+                <Link href="/blog">Blog</Link>
+                <Link href="/faq">FAQ</Link>
+                {["admin", "member"].includes(role) && (
+                  <Link href="/link" className="font-semibold text-secondary">
+                    Link shortener
+                  </Link>
+                )}
+                {["admin", "member"].includes(role) && (
+                  <Link
+                    href="/uploader"
+                    className="font-semibold text-secondary"
+                  >
+                    Upload video
+                  </Link>
+                )}
+                {["admin"].includes(role) && (
+                  <Link href="/admin" className="font-semibold text-secondary">
+                    Admin
+                  </Link>
+                )}
               </SheetContent>
             </Sheet>
           </div>
