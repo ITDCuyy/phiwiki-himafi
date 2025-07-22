@@ -26,7 +26,7 @@ export default function SignOutPage() {
               <FaSignOutAlt className="text-2xl text-white" />
             </div>
             <CardTitle className="text-2xl font-bold">
-              Keluar dari HIMAFI ITB
+              Keluar dari Phiwiki ITB
             </CardTitle>
             <CardDescription>
               Apakah Anda yakin ingin keluar dari akun Anda?

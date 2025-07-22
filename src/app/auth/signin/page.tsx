@@ -37,10 +37,10 @@ export default function SignInPage() {
               <FaLock className="text-2xl text-white" />
             </div>
             <CardTitle className="text-2xl font-bold">
-              Masuk ke HIMAFI ITB
+              Masuk ke Phiwiki ITB
             </CardTitle>
             <CardDescription>
-              Silakan masuk untuk mengakses platform HIMAFI ITB
+              Silakan masuk untuk mengakses platform Phiwiki ITB
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
