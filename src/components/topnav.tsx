@@ -57,6 +57,11 @@ export function TopNav() {
               Link shortener
             </Link>
           )}
+          {["admin", "member"].includes(role) && (
+            <Link href="/uploader" className="font-semibold text-primary">
+              Upload video
+            </Link>
+          )}
           {["admin"].includes(role) && (
             <Link href="/admin" className="font-semibold text-primary">
               Admin
@@ -118,6 +123,14 @@ export function TopNav() {
                       className="font-semibold text-destructive"
                     >
                       Link shortener
+                    </Link>
+                  )}
+                  {["admin", "member"].includes(role) && (
+                    <Link
+                      href="/uploader"
+                      className="font-semibold text-primary"
+                    >
+                      Upload video
                     </Link>
                   )}
                   {["admin"].includes(role) && (
