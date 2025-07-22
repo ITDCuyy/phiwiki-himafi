@@ -49,9 +49,9 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SessionProvider>
+          <SessionProvider session={session}>
             <TRPCReactProvider>
-              <TopNav initialSession={session} />
+              <TopNav />
               {children}
             </TRPCReactProvider>
           </SessionProvider>
