@@ -38,7 +38,7 @@ export function TopNav({
             <div className="flex h-16 w-16 items-center justify-center">
               <img
                 className="rounded-full"
-                src="/phiwiki.jpg"
+                src="/phiwiki.webp"
                 alt="phiwiki"
                 width={128}
                 height={128}

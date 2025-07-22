@@ -18,7 +18,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 export const metadata: Metadata = {
   title: "Phiwiki ITB",
   description: "Phiwiki ITB",
-  icons: [{ rel: "icon", url: "/phiwiki.jpg" }],
+  icons: [{ rel: "icon", url: "/favicon.webp" }],
 };
 
 export default async function RootLayout({
