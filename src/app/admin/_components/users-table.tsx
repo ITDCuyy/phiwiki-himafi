@@ -96,14 +96,17 @@ export function UsersTable({ users: initialUsers }: UsersTableProps) {
         />
       </div>
 
-      <div className="rounded-md border">
+      {/* Add overflow-x-auto to this wrapper */}
+      <div className="w-full overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>User</TableHead>
-              <TableHead>Email</TableHead>
+              {/* Hide Email column on small screens */}
+              <TableHead className="hidden sm:table-cell">Email</TableHead>
               <TableHead>Role</TableHead>
-              <TableHead className="w-[100px]">Actions</TableHead>
+              {/* Ensure Actions column is right-aligned */}
+              <TableHead className="w-[100px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -130,11 +133,12 @@ export function UsersTable({ users: initialUsers }: UsersTableProps) {
                             href={user.image}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="h-8 min-h-8 w-8 min-w-8"
                           >
                             <img
                               src={user.image}
                               alt={user.name ?? "User"}
-                              className="h-8 w-8 rounded-full"
+                              className="rounded-full"
                             />
                           </a>
                         )}
@@ -142,8 +146,8 @@ export function UsersTable({ users: initialUsers }: UsersTableProps) {
                           <div className="font-medium">
                             {user.name ?? "Unknown"}
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            ID: {user.id.slice(0, 8)}...
+                          <div className="max-w-48 overflow-hidden text-nowrap text-sm text-muted-foreground md:max-w-full">
+                            ID: {user.id}
                           </div>
                         </div>
                       </div>

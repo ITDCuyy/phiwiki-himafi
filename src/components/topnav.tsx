@@ -53,17 +53,20 @@ export function TopNav() {
           <Link href="/blog">Blog</Link>
           <Link href="/faq">FAQ</Link>
           {["admin", "member"].includes(role) && (
-            <Link href="/link" className="font-semibold text-primary">
+            <Link href="/link" className="font-semibold text-muted-foreground">
               Link shortener
             </Link>
           )}
           {["admin", "member"].includes(role) && (
-            <Link href="/uploader" className="font-semibold text-primary">
+            <Link
+              href="/uploader"
+              className="font-semibold text-muted-foreground"
+            >
               Upload video
             </Link>
           )}
           {["admin"].includes(role) && (
-            <Link href="/admin" className="font-semibold text-primary">
+            <Link href="/admin" className="font-semibold text-muted-foreground">
               Admin
             </Link>
           )}
@@ -120,7 +123,7 @@ export function TopNav() {
                   {["admin", "member"].includes(role) && (
                     <Link
                       href="/link"
-                      className="font-semibold text-destructive"
+                      className="font-semibold text-muted-foreground"
                     >
                       Link shortener
                     </Link>
@@ -128,7 +131,7 @@ export function TopNav() {
                   {["admin", "member"].includes(role) && (
                     <Link
                       href="/uploader"
-                      className="font-semibold text-primary"
+                      className="font-semibold text-muted-foreground"
                     >
                       Upload video
                     </Link>
@@ -136,7 +139,7 @@ export function TopNav() {
                   {["admin"].includes(role) && (
                     <Link
                       href="/admin"
-                      className="font-semibold text-destructive"
+                      className="font-semibold text-muted-foreground"
                     >
                       Admin
                     </Link>
