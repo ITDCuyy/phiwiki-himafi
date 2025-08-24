@@ -47,11 +47,11 @@ export function TopNav() {
 
         {/* Center: Navigation Links (Desktop) */}
         <nav className="items-center space-x-6 text-sm font-medium max-lg:hidden">
-          {/* <Link href="/about">About</Link>
-          <Link href="/programs">Programs</Link> */}
+          <Link href="/about">About</Link>
+          <Link href="https://linktr.ee/PhiwikiITB">books</Link>
           {/* <Link href="/news">News</Link>
-          <Link href="/blog">Blog</Link> */}
-          {/* <Link href="/faq">FAQ</Link> */}
+          <Link href="/blog">Blog</Link>*/}
+          <Link href="/#faq">FAQ</Link>
           {["admin", "member"].includes(role) && (
             <Link href="/link" className="font-semibold text-secondary">
               Link shortener
