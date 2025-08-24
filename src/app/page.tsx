@@ -5,118 +5,297 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "~/components/ui/carousel";
 import { HydrateClient } from "~/trpc/server";
 import Link from "next/link";
 import Image from "next/image";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
-import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaTiktok,
+  FaXTwitter,
+} from "react-icons/fa6";
+import { ProductCard } from "~/components/product-card";
+import { VideoCard } from "~/components/video-card";
+import { CarouselSection } from "~/components/carousel-section";
+import { SocialLink } from "~/components/social-link";
+import type { ProductData, VideoData, FAQData, SocialLinkData } from "~/types";
+
+// Data constants
+const BOOKS_DATA: ProductData[] = [
+  {
+    title: "[PRE-ORDER] Fisika Dasar I 2025",
+    description:
+      "Buku ajar lengkap untuk mata kuliah FI-1101 dengan pembahasan mendalam",
+    price: "Rp ??",
+    image: "/[PRE-ORDER]-PHIWIKI-ITB-Fisika-Dasar-I-2025.png",
+    link: "https://bit.ly/BukuDariMasaDepan",
+  },
+  {
+    title: "Fisika Dasar II 2025",
+    description: "Lanjutan materi fisika dasar untuk semester 2",
+    price: "Rp ??",
+    image: "/PHIWIKI-ITB-Fisika-Dasar-II-2025.png",
+    link: "https://bit.ly/BukuDariMasaDepan",
+  },
+  {
+    title: "Fisika Dasar I 2024",
+    description: "Edisi tahun lalu",
+    price: "Rp ??",
+    image: "/PHIWIKI-ITB-Fisika-Dasar-I-2024.png",
+    link: "https://bit.ly/BukuDariMasaDepan",
+  },
+];
+
+const BUNDLES_DATA: ProductData[] = [
+  {
+    title: "Bundles",
+    description: "Paket lengkap kebutuhan TPB dengan harga potong",
+    price: "Rp 89.900-335.000",
+    originalPrice: "Rp 92.500-337.500",
+    image: "/bundles.jpg",
+    link: "https://bit.ly/BukuDariMasaDepan",
+    badge: { text: "HEMAT ??%", variant: "primary" as const },
+  },
+  {
+    title: "Phiwiki 911",
+    description: "Paket lengkap untuk kebutuhan lab TPB",
+    // price: "Rp 127.000",
+    // originalPrice: "Rp 150.000",
+    image: "/phiwiki-911.jpg",
+    link: "https://bit.ly/BukuDariMasaDepan",
+    badge: { text: "HEMAT ??%", variant: "secondary" as const },
+  },
+  {
+    title: "Bundle Digital",
+    description:
+      "Akses digital ke semua materi + bank soal + video pembelajaran",
+    price: "Rp 99.000",
+    image:
+      "https://cornwallwithkids.co.uk/wp-content/uploads/2020/11/Coming-soon.jpg",
+    link: "/products/bundle-digital",
+    badge: { text: "DIGITAL", variant: "accent" as const },
+  },
+];
+
+const VIDEOS_DATA: VideoData[] = [
+  {
+    title: "Mekanika Klasik - Dasar",
+    description: "Penjelasan konsep dasar mekanika klasik untuk mahasiswa TPB",
+    thumbnail: "video1.png",
+    videoUrl: "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+  },
+  {
+    title: "Termodinamika - Entropi",
+    description: "Memahami konsep entropi dalam termodinamika dengan mudah",
+    thumbnail: "video2.png",
+    videoUrl: "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+  },
+  {
+    title: "Gelombang & Optik",
+    description: "Eksplorasi fenomena gelombang dan optik geometris",
+    thumbnail: "video3.png",
+    videoUrl: "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+  },
+];
+
+const FAQ_DATA: FAQData[] = [
+  {
+    question: "Apa itu Phiwiki ITB?",
+    answer:
+      "Phiwiki ITB adalah tim buku ajar fisika dasar yang beroperasi di bawah naungan Himpunan Mahasiswa Fisika (HIMAFI) ITB.",
+  },
+  {
+    question: "Bagaimana cara bergabung dengan tim Phiwiki?",
+    answer:
+      "Perekrutan anggota baru biasanya dibuka setiap tahun ajaran baru. Informasi lebih lanjut akan diumumkan melalui kanal media sosial HIMAFI ITB.",
+  },
+  {
+    question: "Di mana saya bisa mendapatkan buku Phiwiki?",
+    answer:
+      "Buku kami dapat dipesan melalui tautan yang kami sediakan saat periode pemesanan dibuka.",
+  },
+];
+
+const SOCIAL_LINKS: SocialLinkData[] = [
+  {
+    href: "https://www.instagram.com/phiwiki.itb/itb",
+    icon: FaInstagram,
+    label: "Instagram Phiwiki ITB",
+  },
+  {
+    href: "https://www.tiktok.com/@phiwiki.itb?_t=ZS-8yG48NYbTlY&_r=1 ",
+    icon: FaTiktok,
+    label: "Tiktok Phiwiki ITB",
+  },
+  {
+    href: "https://www.youtube.com/@PHIWIKIITB ",
+    icon: FaYoutube,
+    label: "YouTube Phiwiki ITB",
+  },
+  {
+    href: "https://x.com/phiwikiitb ",
+    icon: FaXTwitter,
+    label: "X Phiwiki ITB",
+  },
+  {
+    href: "https://www.linkedin.com/company/phiwiki-itb/",
+    icon: FaLinkedin,
+    label: "LinkedIn Phiwiki ITB",
+  },
+];
 
 export default async function HomePage() {
   return (
     <HydrateClient>
       <main className="bg-background text-foreground">
         {/* Hero Section */}
-        <section className="flex h-[80vh] flex-col items-center justify-center bg-gradient-to-b from-primary/10 to-transparent text-center">
-          <h1 className="text-5xl font-bold tracking-tight md:text-6xl">
-            Phiwiki ITB
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            Tim buku ajar fisika dasar oleh HIMAFI ITB. Menyediakan sumber
-            belajar berkualitas untuk mahasiswa TPB ITB.
-          </p>
-          <div className="mt-8 flex gap-4">
-            <Button asChild>
-              <Link href="/books">Lihat Buku</Link>
-            </Button>
-            <Button variant="outline">Gabung Tim</Button>
-          </div>
-        </section>
+        <section className="min-h-[80vh] bg-gradient-to-b from-primary/10 to-transparent px-4 py-16 md:px-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+            {/* First Column */}
+            <div className="space-y-6">
+              <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                Your Physics Solution
+              </h1>
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                Tim buku ajar fisika dasar oleh BSO (Badan Semi Otonom) HIMAFI
+                ITB. Phiwiki ITB menyediakan sumber belajar berkualitas berupa
+                bank soal dan pembahasan lengkap, serta video dikhususkan untuk
+                mahasiswa TPB ITB.
+              </p>
+            </div>
 
-        {/* Ongoing Program Section */}
-        <section className="px-4 py-16 md:px-20">
-          <h2 className="mb-8 text-center text-3xl font-bold">Edisi Terbaru</h2>
-          <div className="mx-auto max-w-4xl">
-            <Card className="overflow-hidden md:flex">
-              <div className="relative h-64 md:h-auto md:w-1/2">
-                <img
-                  src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?q=80&w=2124&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Book Cover"
-                  layout="fill"
-                  className="h-full w-full"
-                />
-              </div>
-              <div className="p-8 md:w-1/2">
-                <h3 className="text-2xl font-bold">
-                  Buku Fisika Dasar IIA Edisi 2024
-                </h3>
-                <p className="mt-2 text-muted-foreground">
-                  Edisi terbaru buku ajar Fisika Dasar IIA (FI-1201) yang
-                  mencakup materi Mekanika Kuantum, Relativitas, dan Fisika
-                  Modern.
-                </p>
-                <p className="mt-4">
-                  Tersedia dalam bentuk cetakan. Preorder sekarang!
-                </p>
-                <Button className="mt-6" asChild>
-                  <Link href="/books/fisika-dasar-2a-2024">Lihat Detail</Link>
+            {/* Second Column */}
+            <div className="flex flex-col items-center justify-center space-y-6 text-center">
+              <div className="rounded-lg bg-white/10 p-8 backdrop-blur-sm">
+                <h2 className="mb-4 text-2xl font-bold">Our main product</h2>
+                <div className="relative mx-auto mb-6 max-w-64 overflow-hidden rounded-lg">
+                  <Image
+                    src="/hero.png"
+                    alt="Physics Book"
+                    width={256}
+                    height={256}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <Button size="lg" asChild>
+                  <Link href="https://linktr.ee/PhiwikiITB">Grab it now!</Link>
                 </Button>
               </div>
-            </Card>
+            </div>
           </div>
         </section>
 
-        {/* Posts & Blogs Section */}
+        {/* Featured Products Section */}
         <section className="bg-muted/40 px-4 py-16 md:px-20">
           <h2 className="mb-8 text-center text-3xl font-bold">
-            Tulisan & Kabar
+            Featured Products
           </h2>
-          <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Placeholder for posts */}
-            {[1, 2, 3].map((post) => (
-              <Card key={post}>
-                <CardHeader>
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img
-                      src={`https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&text=Post+${post}`}
-                      alt={`Post ${post}`}
-                      object-fit="cover"
-                      className="rounded-t-lg"
-                    />
-                  </div>
-                  <CardTitle className="pt-4">
-                    Konsep Entropi dalam Termodinamika {post}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Ringkasan singkat dari tulisan atau kabar yang ada di sini.
-                    Ini akan menarik pembaca untuk mengklik dan membaca lebih
-                    lanjut.
-                  </p>
-                  <Button variant="link" className="mt-4 p-0" asChild>
-                    <Link href={`/posts/${post}`}>Baca Selengkapnya</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+
+          {/* Books Section */}
+          <CarouselSection title="Books" className="mb-12">
+            {BOOKS_DATA.map((book, index) => (
+              <ProductCard key={index} {...book} />
             ))}
+          </CarouselSection>
+
+          {/* Bundles Section */}
+          <CarouselSection title="Bundles">
+            {BUNDLES_DATA.map((bundle, index) => (
+              <ProductCard key={index} {...bundle} />
+            ))}
+          </CarouselSection>
+        </section>
+
+        {/* Featured Videos Section */}
+        <section className="px-4 py-16 md:px-20">
+          <h2 className="mb-8 text-center text-3xl font-bold">
+            Featured Videos
+          </h2>
+          <div className="mx-10 max-w-6xl">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {VIDEOS_DATA.map((video, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="basis-1/2 pl-2 md:pl-4 lg:basis-1/3"
+                  >
+                    <VideoCard {...video} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+
+            <div className="mt-8 text-center">
+              <Button variant="outline" asChild>
+                <Link href="https://www.youtube.com/@PHIWIKIITB">
+                  Lihat Semua Video
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
 
         {/* About Us Section */}
-        <section className="px-4 py-16 md:px-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Tentang Phiwiki</h2>
-            <p className="text-muted-foreground">
-              Phiwiki ITB adalah tim di bawah HIMAFI ITB yang berfokus pada
-              pembuatan dan pengembangan buku ajar Fisika Dasar untuk mahasiswa
-              Tahap Persiapan Bersama (TPB) ITB. Kami berkomitmen menyediakan
-              materi yang mudah dipahami, komprehensif, dan sesuai dengan
-              kurikulum terbaru.
-            </p>
-            <Button className="mt-6" variant="outline" asChild>
-              <Link href="/about">Pelajari Lebih Lanjut</Link>
-            </Button>
+        <section className="relative">
+          {/* Full-width background header */}
+          <div className="relative h-64 overflow-hidden md:h-80 lg:h-screen">
+            <Image
+              src="/our-team.png"
+              alt="Physics Background"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 flex items-center justify-center lg:invisible">
+              <h2 className="text-4xl font-bold text-white md:text-5xl">
+                About Us
+              </h2>
+            </div>
+
+            {/* Content overlay for lg+ screens */}
+            <div className="ems-center invisible absolute inset-0 flex items-center justify-center lg:visible">
+              <div className="mx-auto max-w-4xl px-4 text-center">
+                <h2 className="mb-8 text-6xl font-bold text-white">About Us</h2>
+                <p className="text-xl leading-relaxed text-white/90">
+                  Phiwiki ITB adalah sebuah Badan Semi Otonom (BSO) HIMAFI ITB
+                  yang bertujuan untuk membuat karya buku ajar Fisika Dasar
+                  beserta soal dan pembahasan untuk mahasiswa Tahap Persiapan
+                  Bersama (TPB) ITB. Phiwiki ITB berkomitmen menyediakan materi
+                  yang mudah dipahami, komprehensif, dan sesuai dengan kurikulum
+                  terbaru.
+                </p>
+                <Button
+                  className="mt-8"
+                  variant="outline"
+                  size="lg"
+                  asChild
+                ></Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Content section for smaller screens */}
+          <div className="px-4 py-16 md:px-20 lg:hidden">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+                Phiwiki ITB adalah sebuah Badan Semi Otonom (BSO) HIMAFI ITB
+                yang bertujuan untuk membuat karya buku ajar Fisika Dasar
+                beserta soal dan pembahasan untuk mahasiswa Tahap Persiapan
+                Bersama (TPB) ITB. Phiwiki ITB berkomitmen menyediakan materi
+                yang mudah dipahami, komprehensif, dan sesuai dengan kurikulum
+                terbaru.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -126,32 +305,12 @@ export default async function HomePage() {
             Frequently Asked Questions
           </h2>
           <Accordion type="single" collapsible className="mx-auto max-w-2xl">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Apa itu Phiwiki ITB?</AccordionTrigger>
-              <AccordionContent>
-                Phiwiki ITB adalah tim buku ajar fisika dasar yang beroperasi di
-                bawah naungan Himpunan Mahasiswa Fisika (HIMAFI) ITB.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>
-                Bagaimana cara bergabung dengan tim Phiwiki?
-              </AccordionTrigger>
-              <AccordionContent>
-                Perekrutan anggota baru biasanya dibuka setiap tahun ajaran
-                baru. Informasi lebih lanjut akan diumumkan melalui kanal media
-                sosial HIMAFI ITB.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
-                Di mana saya bisa mendapatkan buku Phiwiki?
-              </AccordionTrigger>
-              <AccordionContent>
-                Buku kami dapat dipesan melalui tautan yang kami sediakan saat
-                periode pemesanan dibuka.
-              </AccordionContent>
-            </AccordionItem>
+            {FAQ_DATA.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index + 1}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </section>
 
@@ -199,26 +358,9 @@ export default async function HomePage() {
               <div>
                 <h3 className="text-lg font-semibold">Media Sosial</h3>
                 <div className="mt-2 flex space-x-4">
-                  <Link
-                    href="https://www.instagram.com/himafi.itb"
-                    className="text-muted-foreground transition-colors hover:text-primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaInstagram className="h-5 w-5" />
-                  </Link>
-                  <Link
-                    href="https://x.com/HIMAFI_ITB"
-                    className="text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    <FaTwitter className="h-5 w-5" />
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/company/himafiitb/"
-                    className="text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    <FaLinkedin className="h-5 w-5" />
-                  </Link>
+                  {SOCIAL_LINKS.map((social, index) => (
+                    <SocialLink key={index} {...social} />
+                  ))}
                 </div>
               </div>
             </div>
