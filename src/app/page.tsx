@@ -424,7 +424,7 @@ export default function HomePage() {
                 {VIDEOS_DATA.map((video, index) => (
                   <CarouselItem
                     key={index}
-                    className="basis-1/2 pl-2 md:pl-4 lg:basis-1/3"
+                    className="pl-2 sm:basis-1/2 md:pl-4 lg:basis-1/3"
                   >
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
