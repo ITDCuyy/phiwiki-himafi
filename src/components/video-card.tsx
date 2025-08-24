@@ -12,7 +12,7 @@ export function VideoCard({
 }: VideoData) {
   return (
     <Card className="overflow-hidden">
-      <div className="relative h-48 w-full">
+      <div className="relative h-32 w-full md:h-48">
         <img
           src={thumbnail}
           alt={`${title} Video Thumbnail`}

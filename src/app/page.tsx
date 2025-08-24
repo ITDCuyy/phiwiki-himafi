@@ -200,7 +200,7 @@ export default function HomePage() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="space-y-8"
+            className="space-y-8 px-2"
           >
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -214,7 +214,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="max-w-2xl text-xl leading-relaxed text-muted-foreground"
+              className="max-w-2xl text-lg leading-relaxed text-muted-foreground"
             >
               Tim buku ajar fisika dasar oleh BSO (Badan Semi Otonom) HIMAFI
               ITB. Phiwiki ITB menyediakan sumber belajar berkualitas berupa
@@ -417,7 +417,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             viewport={{ once: true }}
-            className="mx-auto max-w-7xl"
+            className="mx-10 max-w-7xl"
           >
             <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
@@ -524,7 +524,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
                 viewport={{ once: true }}
-                className="mx-auto max-w-4xl text-xl leading-relaxed text-white/95 xl:text-2xl"
+                className="max-w-4xl px-2 text-xl leading-relaxed text-white/95 xl:text-2xl"
               >
                 Phiwiki ITB adalah sebuah Badan Semi Otonom (BSO) HIMAFI ITB
                 yang bertujuan untuk membuat karya buku ajar Fisika Dasar
